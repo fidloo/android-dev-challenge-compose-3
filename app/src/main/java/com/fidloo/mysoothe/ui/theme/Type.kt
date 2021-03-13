@@ -45,7 +45,7 @@ val typography = typographyFromDefaults(
         fontSize = 15.sp,
         letterSpacing = 1.15.sp,
 
-        ),
+    ),
     h3 = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Bold,

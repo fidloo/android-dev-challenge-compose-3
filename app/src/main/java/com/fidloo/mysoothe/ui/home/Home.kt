@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.fidloo.mysoothe.ui.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,12 +34,15 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Card
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -53,96 +51,161 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Spa
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.fidloo.mysoothe.R
 import com.fidloo.mysoothe.model.Collection
 import com.fidloo.mysoothe.model.Topic
 import com.fidloo.mysoothe.model.bodyTopics
 import com.fidloo.mysoothe.model.collections
 import com.fidloo.mysoothe.model.mindTopics
-import com.fidloo.mysoothe.ui.component.PrimaryButton
-import com.fidloo.mysoothe.ui.component.SecondaryButton
+import com.fidloo.mysoothe.ui.theme.MySootheTheme
 import com.fidloo.mysoothe.ui.utils.NetworkImage
+import dev.chrisbanes.accompanist.insets.navigationBarsHeight
+import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import kotlin.math.max
 
 @Composable
 fun Home() {
-    Column {
-        Spacer(modifier = Modifier.height(56.dp))
-        TextField(
-            value = "Search",
-            onValueChange = { },
-            colors = TextFieldDefaults.textFieldColors(textColor = MaterialTheme.colors.onSurface),
-            textStyle = MaterialTheme.typography.body1,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(56.dp),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp)
+    Scaffold(
+        bottomBar = {
+            BottomNavigation(
+                Modifier.navigationBarsHeight(additional = 56.dp),
+                backgroundColor = MaterialTheme.colors.background,
+                elevation = MySootheTheme.elevations.bottomNavigation
+            ) {
+                BottomNavigationItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Filled.Spa,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                            tint = MaterialTheme.colors.onBackground
+                        )
+                    },
+                    label = {
+                        Text(
+                            "Home".toUpperCase(),
+                            style = MaterialTheme.typography.caption,
+                            color = MaterialTheme.colors.onBackground,
+                        )
+                    },
+                    selected = true,
+                    selectedContentColor = MaterialTheme.colors.secondary,
+                    unselectedContentColor = LocalContentColor.current,
+                    modifier = Modifier.navigationBarsPadding(),
+                    onClick = {}
+                )
+                BottomNavigationItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
+                            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.5f)
+                        )
+                    },
+                    label = {
+                        Text(
+                            "Profile".toUpperCase(),
+                            style = MaterialTheme.typography.caption,
+                            color = MaterialTheme.colors.onBackground.copy(alpha = 0.5f),
+                        )
+                    },
+                    selected = false,
+                    selectedContentColor = MaterialTheme.colors.secondary,
+                    unselectedContentColor = LocalContentColor.current,
+                    modifier = Modifier.navigationBarsPadding(),
+                    onClick = {}
                 )
             }
-        )
-        Text(
-            text = "Favorite collections".toUpperCase(),
-            style = MaterialTheme.typography.h2,
-            color = MaterialTheme.colors.onBackground,
-            modifier = Modifier
-                .paddingFromBaseline(40.dp)
-                .padding(horizontal = 16.dp)
-        )
-        StaggeredGrid(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp)
-        ) {
-            collections.forEach { collection ->
-                CollectionCard(collection = collection)
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { }, backgroundColor = MaterialTheme.colors.primary) {
+                Icon(
+                    imageVector = Icons.Rounded.PlayArrow,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
-        }
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+        isFloatingActionButtonDocked = true,
+        content = {
+            Column {
+                Spacer(modifier = Modifier.height(56.dp))
+                TextField(
+                    value = "Search",
+                    onValueChange = { },
+                    colors = TextFieldDefaults.textFieldColors(textColor = MaterialTheme.colors.onSurface),
+                    textStyle = MaterialTheme.typography.body1,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .height(56.dp),
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Search,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                )
+                Text(
+                    text = "Favorite collections".toUpperCase(),
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .paddingFromBaseline(40.dp)
+                        .padding(horizontal = 16.dp)
+                )
+                StaggeredGrid(
+                    modifier = Modifier
+                        .horizontalScroll(rememberScrollState())
+                        .padding(horizontal = 16.dp)
+                ) {
+                    collections.forEach { collection ->
+                        CollectionCard(collection = collection)
+                    }
+                }
 
-        Text(
-            text = "Align your body".toUpperCase(),
-            style = MaterialTheme.typography.h2,
-            color = MaterialTheme.colors.onBackground,
-            modifier = Modifier
-                .paddingFromBaseline(40.dp)
-                .padding(horizontal = 16.dp)
-        )
-        LazyRow(
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
-        ) {
-            items(bodyTopics) { topic ->
-                TopicItem(topic = topic)
+                Text(
+                    text = "Align your body".toUpperCase(),
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .paddingFromBaseline(40.dp)
+                        .padding(horizontal = 16.dp)
+                )
+                LazyRow(
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+                ) {
+                    items(bodyTopics) { topic ->
+                        TopicItem(topic = topic)
+                    }
+                }
+                Text(
+                    text = "Align your mind".toUpperCase(),
+                    style = MaterialTheme.typography.h2,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .paddingFromBaseline(40.dp)
+                        .padding(horizontal = 16.dp)
+                )
+                LazyRow(
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+                ) {
+                    items(mindTopics) { topic ->
+                        TopicItem(topic = topic)
+                    }
+                }
             }
         }
-        Text(
-            text = "Align your mind".toUpperCase(),
-            style = MaterialTheme.typography.h2,
-            color = MaterialTheme.colors.onBackground,
-            modifier = Modifier
-                .paddingFromBaseline(40.dp)
-                .padding(horizontal = 16.dp)
-        )
-        LazyRow(
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
-        ) {
-            items(mindTopics) { topic ->
-                TopicItem(topic = topic)
-            }
-        }
-    }
+    )
 }
 
 @Composable

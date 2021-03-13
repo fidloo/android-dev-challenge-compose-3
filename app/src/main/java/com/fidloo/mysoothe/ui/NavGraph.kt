@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.fidloo.mysoothe.ui
 
 import androidx.compose.runtime.Composable
@@ -34,7 +33,7 @@ object MainDestinations {
 }
 
 @Composable
-fun NavGraph(startDestination: String = MainDestinations.HOME_ROUTE) {
+fun NavGraph(startDestination: String = MainDestinations.WELCOME_ROUTE) {
     val navController = rememberNavController()
 
     val actions = remember(navController) { MainActions(navController) }
