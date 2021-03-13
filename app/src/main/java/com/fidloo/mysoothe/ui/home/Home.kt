@@ -23,17 +23,22 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
@@ -41,6 +46,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarDefaults.backgroundColor
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -58,7 +64,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.fidloo.mysoothe.R
 import com.fidloo.mysoothe.model.Collection
+import com.fidloo.mysoothe.model.Topic
+import com.fidloo.mysoothe.model.bodyTopics
 import com.fidloo.mysoothe.model.collections
+import com.fidloo.mysoothe.model.mindTopics
 import com.fidloo.mysoothe.ui.component.PrimaryButton
 import com.fidloo.mysoothe.ui.component.SecondaryButton
 import com.fidloo.mysoothe.ui.utils.NetworkImage
@@ -111,6 +120,13 @@ fun Home() {
                 .paddingFromBaseline(40.dp)
                 .padding(horizontal = 16.dp)
         )
+        LazyRow(
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        ) {
+            items(bodyTopics) { topic ->
+                TopicItem(topic = topic)
+            }
+        }
         Text(
             text = "Align your mind".toUpperCase(),
             style = MaterialTheme.typography.h2,
@@ -119,6 +135,13 @@ fun Home() {
                 .paddingFromBaseline(40.dp)
                 .padding(horizontal = 16.dp)
         )
+        LazyRow(
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+        ) {
+            items(mindTopics) { topic ->
+                TopicItem(topic = topic)
+            }
+        }
     }
 }
 
@@ -151,6 +174,33 @@ private fun CollectionCard(collection: Collection) {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun TopicItem(topic: Topic) {
+    Column(
+        modifier = Modifier.padding(top = 8.dp, end = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Surface(
+            modifier = Modifier.size(88.dp),
+            shape = CircleShape,
+        ) {
+            NetworkImage(
+                url = topic.imageUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .aspectRatio(1f)
+            )
+        }
+        Text(
+            text = topic.name,
+            style = MaterialTheme.typography.h3,
+            color = MaterialTheme.colors.onSurface,
+            modifier = Modifier.paddingFromBaseline(24.dp)
+        )
     }
 }
 
