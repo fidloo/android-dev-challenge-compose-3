@@ -38,13 +38,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.fidloo.mysoothe.R
+import com.fidloo.mysoothe.ui.component.PrimaryButton
+import com.fidloo.mysoothe.ui.component.SecondaryButton
 
 @Composable
 fun Welcome(
     onLogInClicked: () -> Unit
 ) {
-    val background =
-        if (isSystemInDarkTheme()) R.drawable.dark_welcome else R.drawable.light_welcome
+    val background = if (isSystemInDarkTheme()) {
+        R.drawable.dark_welcome
+    } else {
+        R.drawable.light_welcome
+    }
+
     Image(
         painter = painterResource(id = background),
         contentDescription = null,
@@ -52,8 +58,7 @@ fun Welcome(
         modifier = Modifier.fillMaxHeight()
     )
 
-    val logo =
-        if (isSystemInDarkTheme()) R.drawable.dark_logo else R.drawable.light_logo
+    val logo = if (isSystemInDarkTheme()) R.drawable.dark_logo else R.drawable.light_logo
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -70,42 +75,9 @@ fun Welcome(
         )
         Spacer(modifier = Modifier.height(8.dp))
         SecondaryButton(
-            onClick = {},
+            onClick = onLogInClicked,
             text = "Log in"
         )
     }
 }
 
-@Composable
-fun PrimaryButton(onClick: () -> Unit, text: String) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(72.dp),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.onPrimary
-        ),
-        shape = MaterialTheme.shapes.medium,
-    ) {
-        Text(text.toUpperCase())
-    }
-}
-
-@Composable
-fun SecondaryButton(onClick: () -> Unit, text: String) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(72.dp),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.secondary,
-            contentColor = MaterialTheme.colors.onSecondary
-        ),
-        shape = MaterialTheme.shapes.medium
-    ) {
-        Text(text.toUpperCase())
-    }
-}
