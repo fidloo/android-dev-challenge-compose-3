@@ -64,7 +64,6 @@ fun Login(
         modifier = Modifier.fillMaxHeight()
     )
 
-    val logo = if (isSystemInDarkTheme()) R.drawable.dark_logo else R.drawable.light_logo
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -97,7 +96,7 @@ fun Login(
         )
         Spacer(modifier = Modifier.height(8.dp))
         PrimaryButton(
-            onClick = {},
+            onClick = onLogInClicked,
             text = "Sign up"
         )
         Row {

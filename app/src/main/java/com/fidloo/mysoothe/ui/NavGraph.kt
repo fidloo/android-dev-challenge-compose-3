@@ -23,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import com.fidloo.mysoothe.ui.home.Home
 import com.fidloo.mysoothe.ui.login.Login
 import com.fidloo.mysoothe.ui.welcome.Welcome
 
@@ -33,7 +34,7 @@ object MainDestinations {
 }
 
 @Composable
-fun NavGraph(startDestination: String = MainDestinations.LOGIN_ROUTE) {
+fun NavGraph(startDestination: String = MainDestinations.HOME_ROUTE) {
     val navController = rememberNavController()
 
     val actions = remember(navController) { MainActions(navController) }
@@ -47,13 +48,8 @@ fun NavGraph(startDestination: String = MainDestinations.LOGIN_ROUTE) {
         composable(MainDestinations.LOGIN_ROUTE) {
             Login(onLogInClicked = actions.loginComplete)
         }
-        composable(MainDestinations.HOME_ROUTE,) { backStackEntry ->
-//            val arguments = requireNotNull(backStackEntry.arguments)
-//            CourseDetails(
-//                courseId = arguments.getLong(COURSE_DETAIL_ID_KEY),
-//                selectCourse = actions.loginComplete,
-//                upPress = actions.upPress
-//            )
+        composable(MainDestinations.HOME_ROUTE) {
+            Home()
         }
     }
 }
@@ -64,8 +60,5 @@ class MainActions(navController: NavHostController) {
     }
     val loginComplete: () -> Unit = {
         navController.navigate(MainDestinations.HOME_ROUTE)
-    }
-    val upPress: () -> Unit = {
-        navController.navigateUp()
     }
 }

@@ -17,19 +17,22 @@ import androidx.compose.ui.graphics.toArgb
 import com.fidloo.mysoothe.ui.NavGraph
 import com.fidloo.mysoothe.ui.theme.MySootheTheme
 import com.fidloo.mysoothe.ui.utils.LocalBackDispatcher
+import com.fidloo.mysoothe.ui.utils.ProvideImageLoader
 import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 @Composable
 fun App(backDispatcher: OnBackPressedDispatcher, window: Window) {
     CompositionLocalProvider(LocalBackDispatcher provides backDispatcher) {
         ProvideWindowInsets {
-            BarsTheming(window)
-            MySootheTheme {
-                Surface(
-                    color = MaterialTheme.colors.background,
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    NavGraph()
+            ProvideImageLoader {
+                BarsTheming(window)
+                MySootheTheme {
+                    Surface(
+                        color = MaterialTheme.colors.background,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        NavGraph()
+                    }
                 }
             }
         }
