@@ -17,24 +17,95 @@
 package com.fidloo.mysoothe.ui.welcome
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.fidloo.mysoothe.R
 
 @Composable
 fun Welcome(
     onLogInClicked: () -> Unit
 ) {
-        val background =
-            if (isSystemInDarkTheme()) R.drawable.dark_welcome else R.drawable.light_welcome
-            Image(
-                painter = painterResource(id = background),
-                contentDescription = null,
-                contentScale = ContentScale.FillHeight,
-                modifier = Modifier.fillMaxHeight()
-            )
+    val background =
+        if (isSystemInDarkTheme()) R.drawable.dark_welcome else R.drawable.light_welcome
+    Image(
+        painter = painterResource(id = background),
+        contentDescription = null,
+        contentScale = ContentScale.FillHeight,
+        modifier = Modifier.fillMaxHeight()
+    )
+
+    val logo =
+        if (isSystemInDarkTheme()) R.drawable.dark_logo else R.drawable.light_logo
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(horizontal = 16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = logo),
+            contentDescription = null,
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        PrimaryButton(
+            onClick = {},
+            text = "Sign up"
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        SecondaryButton(
+            onClick = {},
+            text = "Log in"
+        )
+    }
+}
+
+@Composable
+fun PrimaryButton(onClick: () -> Unit, text: String) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(72.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary
+        ),
+        shape = MaterialTheme.shapes.medium,
+    ) {
+        Text(text.toUpperCase())
+    }
+}
+
+@Composable
+fun SecondaryButton(onClick: () -> Unit, text: String) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(72.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary
+        ),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Text(text.toUpperCase())
+    }
 }
