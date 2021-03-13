@@ -23,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import com.fidloo.mysoothe.ui.login.Login
 import com.fidloo.mysoothe.ui.welcome.Welcome
 
 object MainDestinations {
@@ -32,7 +33,7 @@ object MainDestinations {
 }
 
 @Composable
-fun NavGraph(startDestination: String = MainDestinations.WELCOME_ROUTE) {
+fun NavGraph(startDestination: String = MainDestinations.LOGIN_ROUTE) {
     val navController = rememberNavController()
 
     val actions = remember(navController) { MainActions(navController) }
@@ -44,7 +45,7 @@ fun NavGraph(startDestination: String = MainDestinations.WELCOME_ROUTE) {
             Welcome(onLogInClicked = actions.welcomeComplete)
         }
         composable(MainDestinations.LOGIN_ROUTE) {
-//            Courses(selectCourse = actions.loginComplete)
+            Login(onLogInClicked = actions.loginComplete)
         }
         composable(MainDestinations.HOME_ROUTE,) { backStackEntry ->
 //            val arguments = requireNotNull(backStackEntry.arguments)
