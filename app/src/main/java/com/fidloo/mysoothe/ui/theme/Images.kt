@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 The Android Open Source Project
+ * Copyright 2020 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge
+
+package com.fidloo.mysoothe.ui.theme
+
+import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * Images that can vary by theme.
  */
-class ExampleUnitTest {
-    // Add unit tests here
+@Immutable
+data class Images(@DrawableRes val lockupLogo: Int)
+
+internal val LocalImages = staticCompositionLocalOf<Images> {
+    error("No LocalImages specified")
 }

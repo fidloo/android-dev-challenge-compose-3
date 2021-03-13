@@ -1,4 +1,5 @@
 # Put title of your app here
+MySoothe
 
 ![Workflow result](https://github.com/fidloo/android-dev-challenge-compose-3/workflows/Check/badge.svg)
 

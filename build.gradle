@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-buildscript {
-    ext.kotlin_version = '1.4.31'
-    ext.compose_version = '1.0.0-beta02'
-    ext.coroutines_version = '1.4.2'
+import com.fidloo.mysoothe.buildsrc.Libs
+import com.fidloo.mysoothe.buildsrc.Versions
 
+buildscript {
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-alpha09'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath Libs.androidGradlePlugin
+        classpath Libs.Kotlin.gradlePlugin
     }
 }
 
