@@ -19,24 +19,20 @@ package com.fidloo.mysoothe.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
-import com.fidloo.mysoothe.ui.MainDestinations.COURSE_DETAIL_ID_KEY
-import com.fidloo.mysoothe.ui.courses.CourseDetails
-import com.fidloo.mysoothe.ui.courses.Courses
+import com.fidloo.mysoothe.ui.welcome.Welcome
 
 object MainDestinations {
-    const val COURSES_ROUTE = "courses"
-    const val COURSE_DETAIL_ROUTE = "course"
-    const val COURSE_DETAIL_ID_KEY = "courseId"
+    const val WELCOME_ROUTE = "welcome"
+    const val LOGIN_ROUTE = "login"
+    const val HOME_ROUTE = "home"
 }
 
 @Composable
-fun NavGraph(startDestination: String = MainDestinations.COURSES_ROUTE) {
+fun NavGraph(startDestination: String = MainDestinations.WELCOME_ROUTE) {
     val navController = rememberNavController()
 
     val actions = remember(navController) { MainActions(navController) }
@@ -44,29 +40,29 @@ fun NavGraph(startDestination: String = MainDestinations.COURSES_ROUTE) {
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(MainDestinations.COURSES_ROUTE) {
-            Courses(selectCourse = actions.selectCourse)
+        composable(MainDestinations.WELCOME_ROUTE) {
+            Welcome(onLogInClicked = actions.welcomeComplete)
         }
-        composable(
-            "${MainDestinations.COURSE_DETAIL_ROUTE}/{$COURSE_DETAIL_ID_KEY}",
-            arguments = listOf(navArgument(COURSE_DETAIL_ID_KEY) { type = NavType.LongType })
-        ) { backStackEntry ->
-            val arguments = requireNotNull(backStackEntry.arguments)
-            CourseDetails(
-                courseId = arguments.getLong(COURSE_DETAIL_ID_KEY),
-                selectCourse = actions.selectCourse,
-                upPress = actions.upPress
-            )
+        composable(MainDestinations.LOGIN_ROUTE) {
+//            Courses(selectCourse = actions.loginComplete)
+        }
+        composable(MainDestinations.HOME_ROUTE,) { backStackEntry ->
+//            val arguments = requireNotNull(backStackEntry.arguments)
+//            CourseDetails(
+//                courseId = arguments.getLong(COURSE_DETAIL_ID_KEY),
+//                selectCourse = actions.loginComplete,
+//                upPress = actions.upPress
+//            )
         }
     }
 }
 
 class MainActions(navController: NavHostController) {
-    val onboardingComplete: () -> Unit = {
-        navController.navigate(MainDestinations.COURSES_ROUTE)
+    val welcomeComplete: () -> Unit = {
+        navController.navigate(MainDestinations.LOGIN_ROUTE)
     }
-    val selectCourse: (Long) -> Unit = { courseId: Long ->
-        navController.navigate("${MainDestinations.COURSE_DETAIL_ROUTE}/$courseId")
+    val loginComplete: () -> Unit = {
+        navController.navigate(MainDestinations.HOME_ROUTE)
     }
     val upPress: () -> Unit = {
         navController.navigateUp()

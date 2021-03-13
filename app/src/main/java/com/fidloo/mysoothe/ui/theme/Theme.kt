@@ -24,104 +24,45 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
 import com.fidloo.mysoothe.R
 
-private val YellowThemeLight = lightColors(
-    primary = yellow500,
-    primaryVariant = yellow400,
-    onPrimary = Color.Black,
-    secondary = blue700,
-    secondaryVariant = blue800,
-    onSecondary = Color.White,
-    background = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White
+private val LightTheme = lightColors(
+    primary = gray900,
+    secondary = rust600,
+    onSecondary = white,
+    onPrimary = white,
+    surface = white850,
+    background = taupe100,
+    onBackground = taupe800,
+    onSurface = gray800
 )
 
-private val YellowThemeDark = darkColors(
-    primary = yellow200,
-    secondary = blue200,
-    onSecondary = Color.Black,
-    surface = yellowDarkPrimary
+private val DarkTheme = darkColors(
+    primary = white,
+    secondary = rust300,
+    onSecondary = gray900,
+    onPrimary = gray900,
+    surface = white150,
+    background = gray900,
+    onBackground = taupe100,
+    onSurface = white800
 )
-
-@Composable
-fun YellowTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        YellowThemeDark
-    } else {
-        YellowThemeLight
-    }
-    OwlTheme(darkTheme, colors, content)
-}
-
-private val BlueThemeLight = lightColors(
-    primary = blue700,
-    onPrimary = Color.White,
-    primaryVariant = blue800,
-    secondary = yellow500
-)
-
-private val BlueThemeDark = darkColors(
-    primary = blue200,
-    secondary = yellow200,
-    surface = blueDarkPrimary
-)
-
-@Composable
-fun BlueTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        BlueThemeDark
-    } else {
-        BlueThemeLight
-    }
-    OwlTheme(darkTheme, colors, content)
-}
-
-private val PinkThemeLight = lightColors(
-    primary = pink500,
-    secondary = pink500,
-    primaryVariant = pink600,
-    onPrimary = Color.Black
-)
-
-private val PinkThemeDark = darkColors(
-    primary = pink200,
-    secondary = pink200,
-    surface = pinkDarkPrimary
-)
-
-@Composable
-fun PinkTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        PinkThemeDark
-    } else {
-        PinkThemeLight
-    }
-    OwlTheme(darkTheme, colors, content)
-}
-
 
 private val LightImages = Images(lockupLogo = R.drawable.ic_launcher_foreground)
 
 private val DarkImages = Images(lockupLogo = R.drawable.ic_launcher_background)
 
 @Composable
-private fun OwlTheme(
-    darkTheme: Boolean,
-    colors: Colors,
+fun MySootheTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val colors = if (darkTheme) {
+        DarkTheme
+    } else {
+        LightTheme
+    }
+
     val images = if (darkTheme) DarkImages else LightImages
     CompositionLocalProvider(
         LocalElevations provides Elevations(),
@@ -140,7 +81,7 @@ private fun OwlTheme(
  * Alternate to [MaterialTheme] allowing us to add our own theme systems (e.g. [Elevations]) or to
  * extend [MaterialTheme]'s types e.g. return our own [Colors] extension
  */
-object OwlTheme {
+object MySootheTheme {
 
     /**
      * Proxy to [MaterialTheme]

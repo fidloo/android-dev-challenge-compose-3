@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            App(onBackPressedDispatcher)
+            App(onBackPressedDispatcher, window)
         }
     }
 }

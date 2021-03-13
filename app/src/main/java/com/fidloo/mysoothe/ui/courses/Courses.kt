@@ -37,13 +37,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fidloo.mysoothe.R
-import com.fidloo.mysoothe.ui.theme.BlueTheme
+import com.fidloo.mysoothe.ui.theme.MySootheTheme
 import dev.chrisbanes.accompanist.insets.navigationBarsPadding
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Composable
 fun Courses(selectCourse: (Long) -> Unit) {
-    BlueTheme {
+    MySootheTheme {
         Scaffold(
             backgroundColor = MaterialTheme.colors.primarySurface,
         ) { innerPadding ->
